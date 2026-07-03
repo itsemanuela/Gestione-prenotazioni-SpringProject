@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
+@ToString
 @Getter
 @Setter
 @NoArgsConstructor
@@ -17,7 +19,9 @@ public class Prenotazione {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate data_prenotazione;
+
+    @Column(name = "data_prenotazione")
+    private LocalDate dataPrenotazione;
 
     @ManyToOne
     @JoinColumn(name = "prenotazione_utente_id")
@@ -31,7 +35,7 @@ public class Prenotazione {
 // per definire l'esistenza di una prenotazione nel database, chi ha prenotato, quando e per quale postazione.
 
     public Prenotazione(LocalDate data_prenotazione, Utente utente, Postazione postazione) {
-        this.data_prenotazione = data_prenotazione;
+        this.dataPrenotazione = data_prenotazione;
         this.utente = utente;
         this.postazione = postazione;
 

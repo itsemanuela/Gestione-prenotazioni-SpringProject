@@ -1,16 +1,22 @@
 package emanuela_carrubba.gestione_prenotazioni.runners;
 
 
+import emanuela_carrubba.gestione_prenotazioni.PostazioneException;
+import emanuela_carrubba.gestione_prenotazioni.PrenotazioneException;
 import emanuela_carrubba.gestione_prenotazioni.entities.Edificio;
 import emanuela_carrubba.gestione_prenotazioni.entities.Postazione;
 import emanuela_carrubba.gestione_prenotazioni.entities.TipoPostazione;
+import emanuela_carrubba.gestione_prenotazioni.entities.Utente;
 import emanuela_carrubba.gestione_prenotazioni.repositories.EdificioRepository;
 import emanuela_carrubba.gestione_prenotazioni.repositories.PostazioneRepository;
 import emanuela_carrubba.gestione_prenotazioni.service.PostazioneService;
+import emanuela_carrubba.gestione_prenotazioni.service.PrenotazioneService;
+import emanuela_carrubba.gestione_prenotazioni.service.UtenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -21,6 +27,10 @@ public class MyRunner implements CommandLineRunner {
     private EdificioRepository edificioRepository;
 @Autowired
 private PostazioneService postazioneService;
+@Autowired
+private UtenteService utenteService;
+@Autowired
+private PrenotazioneService prenotazioneService;
 
 
 
@@ -50,6 +60,63 @@ private PostazioneService postazioneService;
 for(Postazione p : listaPostazioni){
     postazioneService.salvaPostazione(p);
 }
+
+//lista utenti
+        List<Utente> listaUtente = List.of(
+                new Utente ("Mario" , "Rossi", "mariorossi@gmail.com"),
+                new Utente("Carla", "Bianchi", "carlabianchi@gmail.com"),
+                new Utente ("Irene", "Verdi", "ireneverdi@gmail.com"),
+        new Utente("Luca", "Neri", "lucaneri@gmail.com"),
+                new Utente("Elena", "Gialli", "elenagialli@gmail.com"),
+                new Utente("Marco", "Blu", "marcoblu@gmail.com"),
+                new Utente("Sara", "Viola", "saraviola@gmail.com"),
+                new Utente("Giorgio", "Grigi", "giorgiogrigi@gmail.com")
+        );
+for(Utente u : listaUtente){
+    utenteService.salvaUtente(u);
+}
+
+//prenoto una sala
+        // mi recupero prima i dati precedentemente salvati e resi oggetti
+ LocalDate dataScelta= LocalDate.of(2026, 07, 10);
+Utente utentePrenotante= listaUtente.get(0);
+Postazione postazioneDaPrenotare= listaPostazioni.get(2);
+
+prenotazioneService.prenotaPostazione(utentePrenotante, postazioneDaPrenotare, dataScelta);
+ System.out.println("L'utente" + utentePrenotante +  "ha richiesto" + postazioneDaPrenotare + "in data" + dataScelta);
+
+ // try catch per prenotare e gestire errori
+
+        // prenotazione 1
+        try {
+            prenotazioneService.prenotaPostazione(listaUtente.get(0), listaPostazioni.get(0), LocalDate.of(2026, 8, 1));
+            System.out.println("Prenotazione 1 effettuata!");
+        } catch (Exception e) {
+            System.err.println("Errore prenotazione 1: " + e.getMessage());
+        }
+
+// prenotazione due
+        try {
+            prenotazioneService.prenotaPostazione(listaUtente.get(1), listaPostazioni.get(1), LocalDate.of(2026, 8, 2));
+            System.out.println("Prenotazione 2 effettuata!");
+        } catch (Exception e) {
+            System.err.println("Errore prenotazione 2: " + e.getMessage());
+        }
+
+// prenotazione provando a violare una regola
+        try {
+            // stesso utente, stessa data, diversa postazione
+            prenotazioneService.prenotaPostazione(listaUtente.get(0), listaPostazioni.get(2), LocalDate.of(2026, 8, 1));
+            System.out.println("Prenotazione 3 effettuata!");
+        } catch (Exception e) {
+            System.err.println("Errore atteso su Prenotazione 3: " + e.getMessage());
+        }
+
+
+
+
+
+
     }}
 
 
