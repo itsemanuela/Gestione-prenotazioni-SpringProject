@@ -1,6 +1,6 @@
 package emanuela_carrubba.gestione_prenotazioni.entities;
 
-import  emanuela_carrubba.gestione_prenotazioni.entities.TipoPostazione;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

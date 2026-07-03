@@ -6,6 +6,7 @@ import emanuela_carrubba.gestione_prenotazioni.entities.Postazione;
 import emanuela_carrubba.gestione_prenotazioni.entities.Prenotazione;
 import emanuela_carrubba.gestione_prenotazioni.entities.Utente;
 import emanuela_carrubba.gestione_prenotazioni.repositories.PrenotazioneRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ public class PrenotazioneService {
     @Autowired
     private PrenotazioneRepository prenotazioneRepository;
 
+    @Transactional
     public void prenotaPostazione(Utente utente, Postazione postazione, LocalDate data_prenotazione) {
         // controllo se l'utente ha già una prenotazione per quel giorno
         if (prenotazioneRepository.existsByUtenteAndDataPrenotazione(utente, data_prenotazione)) {
