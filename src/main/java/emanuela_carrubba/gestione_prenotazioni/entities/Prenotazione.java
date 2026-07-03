@@ -1,6 +1,6 @@
-package entities;
+package emanuela_carrubba.gestione_prenotazioni.entities;
 
-
+import emanuela_carrubba.gestione_prenotazioni.entities.Postazione;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,15 +25,15 @@ public class Prenotazione {
 
     @ManyToOne
     @JoinColumn(name = "postazione_codice")
-    private Postazione postazione;
+    private  Postazione postazione;
 
 //passo questi tre parametri al costruttore perché sono gli elementi minimi necessari
 // per definire l'esistenza di una prenotazione nel database, chi ha prenotato, quando e per quale postazione.
 
- public Prenotazione(LocalDate data_prenotazione, Utente utente, Postazione postazione) {
-     this.data_prenotazione = data_prenotazione;
-     this.utente = utente;
-     this.postazione = postazione;
+    public Prenotazione(LocalDate data_prenotazione, Utente utente, Postazione postazione) {
+        this.data_prenotazione = data_prenotazione;
+        this.utente = utente;
+        this.postazione = postazione;
 
- }
+    }
 }

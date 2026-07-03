@@ -1,6 +1,6 @@
-package entities;
+package emanuela_carrubba.gestione_prenotazioni.entities;
 
-
+import emanuela_carrubba.gestione_prenotazioni.entities.Postazione;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,8 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "edificio")
@@ -20,14 +21,15 @@ public class Edificio {
     private String indirizzo;
     private String citta;
 
-   public Edificio(String nome, String indirizzo,String citta) {
-       this.nome = nome;
+    public Edificio(String nome, String indirizzo,String citta) {
+        this.nome = nome;
         this.indirizzo = indirizzo;
         this.citta= citta;
-   }
+    }
 
     //un edificio ha molte postazioni
     @OneToMany(mappedBy = "edificio")
     private List<Postazione> postazioni;
 
 }
+
