@@ -5,6 +5,8 @@ import emanuela_carrubba.gestione_prenotazioni.repositories.EdificioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EdificioService {
     @Autowired
@@ -15,5 +17,13 @@ edificioRepository.save(edificio);
         System.out.println("Edificio salvata" + edificio);
 
 
+    }
+
+    public List<Edificio> findByCitta(String citta) {
+        return  edificioRepository.findByCitta(citta);
+    }
+
+    public List<String> recuperaTutteLeCitta() {
+        return edificioRepository.findAllCitta();
     }
 }

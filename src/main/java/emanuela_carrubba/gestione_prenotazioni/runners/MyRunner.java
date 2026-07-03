@@ -1,14 +1,11 @@
 package emanuela_carrubba.gestione_prenotazioni.runners;
 
 
-import emanuela_carrubba.gestione_prenotazioni.PostazioneException;
-import emanuela_carrubba.gestione_prenotazioni.PrenotazioneException;
 import emanuela_carrubba.gestione_prenotazioni.entities.Edificio;
 import emanuela_carrubba.gestione_prenotazioni.entities.Postazione;
 import emanuela_carrubba.gestione_prenotazioni.entities.TipoPostazione;
 import emanuela_carrubba.gestione_prenotazioni.entities.Utente;
 import emanuela_carrubba.gestione_prenotazioni.repositories.EdificioRepository;
-import emanuela_carrubba.gestione_prenotazioni.repositories.PostazioneRepository;
 import emanuela_carrubba.gestione_prenotazioni.service.PostazioneService;
 import emanuela_carrubba.gestione_prenotazioni.service.PrenotazioneService;
 import emanuela_carrubba.gestione_prenotazioni.service.UtenteService;
@@ -31,6 +28,7 @@ private PostazioneService postazioneService;
 private UtenteService utenteService;
 @Autowired
 private PrenotazioneService prenotazioneService;
+
 
 
 
@@ -109,10 +107,24 @@ prenotazioneService.prenotaPostazione(utentePrenotante, postazioneDaPrenotare, d
             prenotazioneService.prenotaPostazione(listaUtente.get(0), listaPostazioni.get(2), LocalDate.of(2026, 8, 1));
             System.out.println("Prenotazione 3 effettuata!");
         } catch (Exception e) {
-            System.err.println("Errore atteso su Prenotazione 3: " + e.getMessage());
+           System.err.println("Errore atteso su Prenotazione 3: " + e.getMessage());
         }
 
+// testo metodo di ricerca per postazioni
+        // --- TEST RICERCA POSTAZIONI ---
+        System.out.println("\n--- TEST RICERCA POSTAZIONI ---");
 
+        String cittaDaCercare = "Napoli";
+        TipoPostazione tipoDaCercare = TipoPostazione.PRIVATO;
+
+        List<Postazione> risultati = postazioneService.cercaPostazione(tipoDaCercare, cittaDaCercare);
+
+        if (!risultati.isEmpty()) {
+            System.out.println("Trovate " + risultati.size() + " postazione/i di tipo " + tipoDaCercare + " a " + cittaDaCercare + ":");
+            risultati.forEach(p -> System.out.println(" - Codice: " + p.getCodice_univoco() + ", Descrizione: " + p.getDescrizione()));
+        } else {
+            System.out.println("Nessuna postazione trovata per i criteri specificati.");
+        }
 
 
 

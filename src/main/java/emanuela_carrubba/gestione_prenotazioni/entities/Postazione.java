@@ -20,7 +20,8 @@ public class Postazione {
     private String descrizione;
 
     @Enumerated(EnumType.STRING)
-    private TipoPostazione tipo_postazione;
+    @Column(name = "tipo_postazione")
+    private TipoPostazione tipoPostazione;
 
 
     //un edificio puo avere piu postazioni quindi in questo caso definisco una ManyToOne verso edificio
@@ -28,10 +29,10 @@ public class Postazione {
     private Edificio edificio;
 
 
-    public Postazione(String codice_univoco, int max_partecipanti,String descrizione, TipoPostazione tipo_postazione, Edificio edificio ) {
+    public Postazione(String codice_univoco, int max_partecipanti,String descrizione, TipoPostazione tipoPostazione, Edificio edificio ) {
         this.codice_univoco = codice_univoco;
         this.max_partecipanti = max_partecipanti;
-        this.tipo_postazione = tipo_postazione;
+   this.tipoPostazione = tipoPostazione;
         this.edificio = edificio;
         this.descrizione = descrizione;
 
